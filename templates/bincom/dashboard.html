@@ -1,0 +1,99 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Filter Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'bincom/css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+<main role="main" class="container">
+
+    <h3>Check Individual Polling Results</h3>
+    {% if bool %}
+        <form method="POST" action="{% url 'polling-results' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Lga">Local Government Area</label>
+                    <select id="lga" class="form-control" name="lga" required>
+                        <option selected>Choose...</option>
+                        {% for place in lga %}
+                            <option value="{{ place.id }}">{{ place|title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="ward">Ward</label>
+                    <select id="ward" class="form-control" name="ward" required>
+                        <option selected>Choose...</option>
+                        {% for wd in ward %}
+                            <option value="{{ wd.uniqueid }}">{{ wd.ward_name|title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="Polling Unit">Polling Unit</label>
+                    <select id="unit" class="form-control" name="unit" required>
+                        <option selected>Choose...</option>
+                        {% for pw in pollings %}
+                            <option value="{{ pw.uniqueid }}">{{ pw.polling_unit_name|title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <hr/>
+        {% if results %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Polling Unit</th>
+                    {% for result in results %}
+                        <th>{{ result.party_abbreviation }}</th>
+                    {% empty %}
+                        <th>None Found</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>{{ polling_unit.polling_unit_name|title }}</td>
+                    {% for result in results %}
+                        <td>{{ result.party_score }}</td>
+                    {% empty %}
+                        <td>No result found</td>
+                    {% endfor %}
+
+                </tr>
+                </tbody>
+            </table>
+        {% endif %}
+    {% endif %}
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

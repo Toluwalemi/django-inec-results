@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import BlogListView
+from .views import HomePageView, polling_unit_view
 
 urlpatterns = [
-    path('', BlogListView.as_view(), name='home'),
+    path('', HomePageView.as_view(), name='home'),
+    path('polling-results/', polling_unit_view, name='polling-results')
 ]
