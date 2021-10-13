@@ -16,9 +16,12 @@ class Agentname(models.Model):
     phone = models.CharField(max_length=13)
     pollingunit_uniqueid = models.IntegerField()
 
-    class Meta:
-        managed = False
-        db_table = 'agentname'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'agentname'
+
+    def __str__(self):
+        return self.firstname + self.lastname
 
 
 class AnnouncedLgaResults(models.Model):
@@ -30,9 +33,9 @@ class AnnouncedLgaResults(models.Model):
     date_entered = models.DateTimeField()
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'announced_lga_results'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'announced_lga_results'
 
 
 class AnnouncedPuResults(models.Model):
@@ -44,9 +47,9 @@ class AnnouncedPuResults(models.Model):
     date_entered = models.DateTimeField()
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'announced_pu_results'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'announced_pu_results'
 
 
 class AnnouncedStateResults(models.Model):
@@ -58,9 +61,9 @@ class AnnouncedStateResults(models.Model):
     date_entered = models.DateTimeField()
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'announced_state_results'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'announced_state_results'
 
 
 class AnnouncedWardResults(models.Model):
@@ -72,9 +75,9 @@ class AnnouncedWardResults(models.Model):
     date_entered = models.DateTimeField()
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'announced_ward_results'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'announced_ward_results'
 
 
 class Lga(models.Model):
@@ -84,21 +87,27 @@ class Lga(models.Model):
     state_id = models.IntegerField()
     lga_description = models.TextField(blank=True, null=True)
     entered_by_user = models.CharField(max_length=50)
-    date_entered = models.DateTimeField()
+    date_entered = models.DateTimeField(null=True)
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'lga'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'lga'
+
+    def __str__(self):
+        return self.lga_name
 
 
 class Party(models.Model):
     partyid = models.CharField(max_length=11)
     partyname = models.CharField(max_length=11)
 
-    class Meta:
-        managed = False
-        db_table = 'party'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'party'
+
+    def __str__(self):
+        return self.partyname
 
 
 class PollingUnit(models.Model):
@@ -116,18 +125,18 @@ class PollingUnit(models.Model):
     date_entered = models.DateTimeField(blank=True, null=True)
     user_ip_address = models.CharField(max_length=50, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'polling_unit'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'polling_unit'
 
 
 class States(models.Model):
     state_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'states'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'states'
 
 
 class Ward(models.Model):
@@ -137,9 +146,12 @@ class Ward(models.Model):
     lga_id = models.IntegerField()
     ward_description = models.TextField(blank=True, null=True)
     entered_by_user = models.CharField(max_length=50)
-    date_entered = models.DateTimeField()
+    date_entered = models.DateTimeField(null=True)
     user_ip_address = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'ward'
+    # class Meta:
+    #     managed = False
+    #     db_table = 'ward'
+
+    def __str__(self):
+        return self.ward_name
